@@ -54,6 +54,19 @@
             }
         </script>
 
+
+        <script>
+            function statusChangeCallback( response ){
+                alert( response );
+            }
+
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+
+
+        </script>
+
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
