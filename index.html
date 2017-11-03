@@ -16,6 +16,34 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css" >
         <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css" >
+        <link href="//netdna.bootstrapcdn.com/bootswatch/3.1.0/superhero/bootstrap.min.css" rel="stylesheet">
+
+        <style>
+            .centered-form .panel{
+                background: rgba(255, 255, 255, 0.8);
+                box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+                padding: 2px;
+            }
+
+            .centered-form{
+                margin-top: 60px;
+            }
+
+            body{
+                background: url("img/turquoise-girl.jpg") no-repeat center fixed;
+                background-size: cover;
+            }
+
+            .centered-form .panel{
+                background: rgba(255, 255, 255, 0.8);
+                box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+            }
+
+            .centered-form{
+                margin-top: 60px;
+            }
+        </style>
+
     </head>
     <body>
         <!-- Load the facebook API! -->
@@ -28,6 +56,10 @@
                     version          : 'v2.10'
                 });
                 FB.AppEvents.logPageView();
+
+                FB.getLoginStatus(function(response) {
+                    statusChangeCallback(response);
+                });
             };
 
             (function(d, s, id){
@@ -39,6 +71,7 @@
             }(document, 'script', 'facebook-jssdk'));
 
 
+
         </script>
 
 
@@ -46,8 +79,9 @@
             function doFBLogin( ) {
                FB.login( function( response ){
                    if( response.status === 'connected' ){
-                       alert( "will wonders never seize" );
+                       window.location.href = "enterData.html";
                    } else {
+                       window.location.href = "enterData.html";
                        alert( "not again" );
                    }
                }, {scope: 'public_profile,email'});
@@ -57,12 +91,11 @@
 
         <script>
             function statusChangeCallback( response ){
-                alert( response );
+                if( response )
+                    alert( response );
+                else
+                    alert( 'no joy' );
             }
-
-            FB.getLoginStatus(function(response) {
-                statusChangeCallback(response);
-            });
         </script>
 
         <!--[if lte IE 9]>
@@ -70,7 +103,7 @@
         <![endif]-->
 
         <!-- Add your site or application content here -->
-        <p>Hello world! This is HTML5 Boilerplate.</p>
+        <p>Hello world! S&F in HTML5.</p>
         <script src="js/vendor/modernizr-3.5.0.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
@@ -86,18 +119,59 @@
         </script>
         <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
-        <div class="container">
-            <div class="row social-buttons">
-                <a class="col-sm-4 btn btn-block btn-social btn-lg btn-facebook" style="color:#fff;" onclick="doFBLogin();">
-                    <span class="fa fa-facebook" ></span> Sign in with Facebook
-                </a>
-            </div>
-            <div class="row social-buttons">
-                <a class="col-sm-4 btn btn-block btn-social btn-lg btn-google" style="color:#fff" onclick="FB.getLoginStatus(function(response) {
-                statusChangeCallback(response);
-            });">
-                    <span class="fa fa-google"></span> Sign in with Google
-                </a>
+        <div class="container" style="height:100vh">
+            <div class="row centered-form">
+                <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="background-color: rgba(0,0,0,0.25)">
+                            <h3 class="panel-title"><strong>Discover your &nbsp; STYLE&FIT</strong></h3>
+                        </div>
+                        <div class="panel-body" style="background-color: rgba( 1,1,1,0.15)">
+
+                            <div class="row">
+                                <div class="form-group col">
+                                    <input type="text" name="user_name" class="form-control input-sm" placeholder="User Name">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col">
+                                    <input type="password" name="password" class="form-control input-sm" placeholder="Password">
+                                </div>
+                            </div>
+
+                            <div class="row col form-group center-block">
+                                <input type="submit" value="LOGIN" class="btn btn-info btn-block" style="background-color: rgba( 64, 224, 208 )">
+                            </div>
+
+                            <div class="row col form-group center-block">
+                                <h1 class="text-center" style="white-space: nowrap">
+                                    <del>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp </del>
+                                    OR
+                                    <del>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp </del>
+                                </h1>
+                            </div>
+
+                            <div class="row social-buttons">
+                                <div class="form-group center-block col">
+
+                                    <a class="btn btn-block btn-social btn-md btn-facebook" style="color:#fff;" onclick="doFBLogin();">
+                                        <span class="fa fa-facebook" ></span> Sign in with Facebook
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="row social-buttons">
+                                <div class="form-group center-block col">
+                                    <a class=" btn btn-block btn-social btn-md btn-google" style="color:#fff" onclick="">
+                                        <span class="fa fa-google"></span> Sign in with Google
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

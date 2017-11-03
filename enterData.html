@@ -29,10 +29,12 @@
             margin-top: 60px;
         }
 
+
         body{
             background: url("img/turquoise-girl.jpg") no-repeat center fixed;
             background-size: cover;
         }
+
 
         .centered-form .panel{
             background: rgba(255, 255, 255, 0.8);
@@ -44,44 +46,37 @@
         }
     </style>
 
-
-    <style>
-        .outline {
-            position: relative;
-            width : 200px;
-            height: 200px;
-            border: 10px solid forestgreen;
-            border-radius: 100%;
-        }
-
-        .ball {
-            position: absolute;
-            top   : 90px;
-            left  : 90px;
-            width : 100px;
-            height: 100px;
-            background: red;
-            border-radius: 100%;
-        }
-
-    </style>
-
-
 </head>
 <body>
 <!-- Load the facebook API! -->
 <script>
+    function statusChangeCallback( response ){
+        if( response )
+            alert( response );
+        else
+            alert( 'GTFO!' );
+    }
+
+
     window.fbAsyncInit = function() {
         FB.init({
             appId            : '833613743472776',
             autoLogAppEvents : true,
+            status           : true,
             xfbml            : true,
             version          : 'v2.10'
         });
         FB.AppEvents.logPageView();
 
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
+        /*
+        FB.getLoginStatus( function( response ){
+            statusChangeCallback( response );
+        });
+        */
+
+        FB.Event.subscribe('auth.statusChange', function(response) {
+            // do something with response
+            alert( JSON.stringify( response ) );
         });
     };
 
@@ -94,31 +89,31 @@
     }(document, 'script', 'facebook-jssdk'));
 
 
-
 </script>
 
 
 <script>
-    function doFBLogin( ) {
+
+    function doFBLogin( ){
         FB.login( function( response ){
-            if( response.status === 'connected' ){
+            if( response.status === 'connected' ) {
                 window.location.href = "enterData.html";
             } else {
                 window.location.href = "enterData.html";
                 alert( "not again" );
             }
-        }, {scope: 'public_profile,email'});
+        }, { scope: 'public_profile,email' } );
     }
+
 </script>
 
 
 <script>
-    function statusChangeCallback( response ){
-        if( response )
-            alert( response );
-        else
-            alert( 'no joy' );
-    }
+
+
+    FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+    });
 </script>
 
 <!--[if lte IE 9]>
@@ -126,7 +121,7 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<p>Hello world! S&F in HTML5.</p>
+<p>We need your deets!</p>
 <script src="js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
@@ -142,27 +137,69 @@
 </script>
 <script src="https://www.google-analytics.com/analytics.js" async defer></script>
 
-<div class="container" style="height:100vh">
-    <div class="row align-item-center">
+<div class="container">
+    <div class="row centered-form">
         <div class="col-xs-12 col-md-6 col-sm-offset-2 col-md-offset-3">
-            <div class="panel panel-default" style="background-color: rgba(0,0,0,0.0)">
-                <div class="panel-heading" style="background-color: rgba(0,0,0,0.45)">
-                    <h3 class="panel-title text-center"><strong>Place your phone on the floor and prop it against a wall. Align the ball to the middle of the circle.  The ball will turn green when the phone is correctly placed.</strong></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>We need your details</strong></h3>
                 </div>
-                <div class="panel-body"  style="background-color: rgba( 1,1,1,0.25)">
+                <div class="panel-body">
 
-                    <div class="row">
-                        <div class="form-group center-block">
+                    <form role="form" method="GET" action="align.html">
 
-                            <div class="outline" >
-                                <div class="ball"></div>
+                        <div class="row">
+                            <div class="form-group center-block">
+                                <div class="btn-group" data-toggle="buttons" >
+                                    <label class="btn btn-info active">
+                                        <input type="radio" name="gender" id="imperial" autocomplete="off" checked> in / lb
+                                    </label>
+                                    <label class="btn btn-info">
+                                        <input type="radio" name="gender" id="metric" autocomplete="off"> cm  / kg
+                                    </label>
+                                </div>
                             </div>
-
-                            <!-- <pre class="output"></pre> -->
-
                         </div>
-                    </div>
 
+                        <div class="row">
+                            <div class="form-group center-block">
+                                <div class="btn-group" data-toggle="buttons" >
+                                    <label class="btn btn-info active">
+                                        <input type="radio" name="system" id="male" autocomplete="off"> Male
+                                    </label>
+                                    <label class="btn btn-info">
+                                        <input type="radio" name="system" id="female" autocomplete="off" checked> Female
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" >
+                            <div class="form-group col">
+                                <input type="text" name="first_name" class="form-control input-sm" placeholder="Age">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col">
+                                <input type="text" name="last_name" class="form-control input-sm" placeholder="Weight in lbs">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="last_name" class="form-control input-sm" placeholder="Height Feet">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="last_name" class="form-control input-sm" placeholder="Height Inches">
+                                </div>
+                            </div>
+                        </div>
+                        <input type="submit" value="I am getting PUMPED!" class="btn btn-info btn-block">
+                    </form>
                 </div>
             </div>
         </div>
@@ -172,82 +209,3 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-    // TODO: We really need an onlad here so this code does not start running until everything is loaded.  Then we can move it to the top.
-    var ball   = document.querySelector('.ball');
-    var outline = document.querySelector('.outline');
-    //var output = document.querySelector('.output');
-
-    var maxX = ( outline.clientWidth + 20  ) - ball.clientWidth;
-    var maxY = ( outline.clientHeight  ) - ball.clientHeight;
-
-
-
-    function handleOrientation(event) {
-        var x = event.beta;  // In degree in the range [-180,180]
-        var y = event.gamma; // In degree in the range [-90,90]
-
-
-        //output.innerHTML  = "beta : " + x + "\n";
-        //output.innerHTML += "gamma: " + y + "\n";
-
-        if( x >= 75 && x <= 85 && y >= -2 && y <= 2 ){
-            ball.style.background = "forestgreen";
-        } else {
-            ball.style.background= "red";
-        }
-
-        // Because we don't want to have the device upside down
-        // We constrain the x value to the range [-90,90]
-        if (x >  105) { x =  105; }
-        if (x < 55) { x = 55;}
-
-        if( y < -20 ) { y = -20; }
-        if( y > 10 ) { y = 10; }
-
-        // To make computation easier we shift the range of
-        // x and y to [0,180]
-        //x += 90;
-        //y += 90;
-
-        // 10 is half the size of the ball
-        // It center the positioning point to the center of the ball
-
-        var xPct = ( 105 - x ) / 60;
-
-        // since y goes between -10 and +10, we add 20 to make it go from 0 to 30 to make the math easy
-        var yPct = ( 40 - ( y + 20 ) ) / 40;
-
-        ball.style.top  = maxX * xPct + "px";
-        ball.style.left = maxY * yPct + "px";
-        //output.innerHTML += "top: " + ball.style.top + " / " + maxX + "\n";
-        //output.innerHTML += " left: " + ball.style.left + " / " + maxY + "\n";
-
-    }
-
-    window.addEventListener('deviceorientation', handleOrientation);
-</script>
