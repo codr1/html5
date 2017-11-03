@@ -141,10 +141,11 @@
     <div class="row centered-form">
         <div class="col-xs-12 col-md-6 col-sm-offset-2 col-md-offset-3">
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="panel-heading" style="background-color: rgba(0,0,0,0.25)">
                     <h3 class="panel-title"><strong>We need your details</strong></h3>
                 </div>
-                <div class="panel-body">
+
+                <div class="panel-body" style="background-color: rgba( 1,1,1,0.15)">
 
                     <form role="form" method="GET" action="align.html">
 
@@ -176,28 +177,35 @@
 
                         <div class="row" >
                             <div class="form-group col">
-                                <input type="text" name="first_name" class="form-control input-sm" placeholder="Age">
+                                <input type="number" name="age" class="form-control input-sm" min="13" max="130" title="Age" placeholder="Age" required>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col">
-                                <input type="text" name="last_name" class="form-control input-sm" placeholder="Weight in lbs">
+                                <input type="number" name="weight" class="form-control input-sm" min="50" max="500" title="Weight in lbs" placeholder="Weight in lbs" required>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row hidden" id="cmRow">
+                            <div class="form-group col">
+                                <input type="number" name="heightCm" class="form-control input-sm" min="100" max="250" step="1" title="Height in cm" placeholder="Height cm" >
+                            </div>
+                        </div>
+
+                        <div class="row" id="inRow">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="last_name" class="form-control input-sm" placeholder="Height Feet">
+                                    <input type="number" name="heightFt" class="form-control input-sm" min="3" max="8" step="1" placeholder="Height Feet" required>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <input type="text" name="last_name" class="form-control input-sm" placeholder="Height Inches">
+                                    <input type="number" name="heightIn" class="form-control input-sm" min="0" max="11" step="1" placeholder="Height Inches" required>
                                 </div>
                             </div>
                         </div>
+
                         <input type="submit" value="I am getting PUMPED!" class="btn btn-info btn-block">
                     </form>
                 </div>
@@ -209,3 +217,51 @@
 
 </body>
 </html>
+
+
+<script>
+
+    // Handle metric system change
+    $("input[name=gender]").change(function () {
+        if( this.id === 'metric' ){
+            $("div[id=cmRow]").removeClass( 'hidden' );
+            $("div[id=inRow]").addClass( 'hidden' );
+
+            $( "input[name=heightCm]" ).prop('required', true);
+            $("input[name=heightIn]").prop('required', false);
+            $("input[name=heightFt]").prop('required', false);
+
+
+            $weightInput = $( "input[name=weight]" );
+            $weightInput.attr( "placeholder", "Weight in kgs" );
+            $weightInput.attr( "title", "Weight in kgs" );
+
+
+            if( $weightInput.val() !== "" ) {
+                $weightInput.val( Math.round ( $weightInput.val() * 0.453592 ) );
+            }
+
+
+
+        } else {
+            $("div[id=inRow]").removeClass('hidden');
+            $("div[id=cmRow]").addClass('hidden');
+
+            $("input[name=heightCm]").prop('required', false);
+            $("input[name=heightIn]").prop('required', true);
+            $("input[name=heightFt]").prop('required', true);
+
+            $weightInput = $("input[name=weight]");
+            $weightInput.attr( "placeholder", "Weight in lbs" );
+            $weightInput.attr( "title", "Weight in lbs" );
+
+            $weightInput.attr( 'placeholder', "Weight in lbs" );
+
+            if( $weightInput.val() !== "" ) {
+                $weightInput.val( Math.round ( $weightInput.val() * 2.20462  ) );
+            }
+        }
+
+    });
+
+</script>
