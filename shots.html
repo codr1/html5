@@ -1,61 +1,330 @@
-<!--
-	Ideally these elements aren't created until it's confirmed that the
-	client supports video/camera, but for the sake of illustrating the
-	elements involved, they are created with markup (not JavaScript)
--->
-<video id="video"  autoplay playsinline></video>
-<button id="snap">Snap Photo</button>
-<canvas id="canvas" width="640" height="480"></canvas>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>WebFit</title>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<script>
-    // Grab elements, create settings, etc.
-    var video = document.getElementById('video');
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-social/bootstrap-social.css" >
+    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.css" >
+    <link href="//netdna.bootstrapcdn.com/bootswatch/3.1.0/superhero/bootstrap.min.css" rel="stylesheet">
 
-    var constraints = {
-        video: {
-            mandatory: {
-                maxWidth: 1280,
-                maxHeight: 720,
-                minWidth: 640,
-                minHeight: 480
-            }
+    <style>
+        .centered-form .panel{
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+            padding: 2px;
         }
-    };
+
+        .centered-form{
+            margin-top: 60px;
+        }
+
+        body{
+            background: url("img/turquoise-girl.jpg") no-repeat center fixed;
+            background-size: cover;
+        }
+
+        .centered-form .panel{
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
+        }
+
+        .centered-form{
+            margin-top: 60px;
+        }
+    </style>
 
 
+    <style>
+        .outline {
+            position: relative;
+            width : 200px;
+            height: 200px;
+            border: 10px solid forestgreen;
+            border-radius: 100%;
+        }
 
-    var videoWidth, videoHeight;
+        .ball {
+            position: absolute;
+            top   : 90px;
+            left  : 90px;
+            width : 100px;
+            height: 100px;
+            background: red;
+            border-radius: 100%;
+        }
 
-    var getVideoSize = function() {
-        setTimeout(function(){
+    </style>
 
 
-        videoWidth = video.videoWidth;
-        videoHeight = video.videoHeight;
-        video.removeEventListener('playing', getVideoSize, false);
+</head>
+<body>
+<!-- Load the facebook API! -->
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId            : '833613743472776',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v2.10'
+        });
+        FB.AppEvents.logPageView();
+
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
         });
     };
 
-    video.addEventListener('playing', getVideoSize, false);
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
 
-    // Get access to the camera!
-    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        // Not adding `{ audio: true }` since we only want video now
-        navigator.mediaDevices.getUserMedia( {video: true} ).then(function(stream) {
-            video.src = window.URL.createObjectURL(stream);
-            video.play();
-        });
-    }
-
-    // Elements for taking the snapshot
-    var canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
-
-
-    // Trigger photo take
-    document.getElementById("snap").addEventListener("click", function() {
-        context.drawImage( video, 0, 0, video.width, video.height );
-    });
 
 </script>
+
+
+<script>
+    function doFBLogin( ) {
+        FB.login( function( response ){
+            if( response.status === 'connected' ){
+                window.location.href = "enterData.html";
+            } else {
+                window.location.href = "enterData.html";
+                alert( "not again" );
+            }
+        }, {scope: 'public_profile,email'});
+    }
+</script>
+
+
+<script>
+    function statusChangeCallback( response ){
+        if( response )
+            alert( response );
+        else
+            alert( 'no joy' );
+    }
+</script>
+
+<!--[if lte IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+<![endif]-->
+
+<!-- Add your site or application content here -->
+<p>Hello world! S&F in HTML5.</p>
+<script src="js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+
+<!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+<script>
+    window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+    ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+</script>
+<script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+<div class="container" style="height:100vh">
+
+    <div id="videoblock">
+        <p id="dimensions"></p>
+
+        <video id="gum-res-local" autoplay></video>
+        <div id="width">
+            <label>Width <span></span>px:</label>
+            <input type="range" min="0" max="1920" value="0">
+        </div>
+    </div>
+    <p id="errormessage"></p>
+
+    <div id="buttons">
+        <button id="qvga">QVGA</button>
+        <button id="vga">VGA</button>
+        <button id="hd">HD</button>
+        <button id="full-hd">Full HD</button>
+    </div>
+
+</div>
+
+<script>
+
+
+    'use strict';
+
+    var dimensions = document.querySelector('#dimensions');
+    var video = document.querySelector('video');
+    var stream;
+
+    var vgaButton = document.querySelector('#vga');
+    var qvgaButton = document.querySelector('#qvga');
+    var hdButton = document.querySelector('#hd');
+    var fullHdButton = document.querySelector('#full-hd');
+
+    var videoblock = document.querySelector('#videoblock');
+    var messagebox = document.querySelector('#errormessage');
+
+    var widthInput = document.querySelector('div#width input');
+    var widthOutput = document.querySelector('div#width span');
+
+    var currentWidth = 0;
+    var currentHeight = 0;
+
+    /*vgaButton.onclick = function() {
+        getMedia(vgaConstraints);
+    };
+
+    qvgaButton.onclick = function() {
+        getMedia(qvgaConstraints);
+    };
+
+    hdButton.onclick = function() {
+        getMedia(hdConstraints);
+    };
+
+    fullHdButton.onclick = function() {
+        getMedia(fullHdConstraints);
+    };*/
+
+
+    var constratints = [
+        // fullHdConstraints :
+        {
+            video: { width: { exact: 1920 }, height: { exact: 1080 } }
+        },
+
+        // hdConstraints :
+        {
+            video: { width: { exact: 1280 }, height: { exact: 720 } }
+        },
+
+        // vgaConstraints :
+        {
+            video: { width: { exact: 640 }, height: { exact: 480 } }
+        },
+
+        // qvgaConstraints :
+        {
+            video: { width: { exact: 320 }, height: { exact: 240 } }
+        }
+
+    ];
+
+    function gotStream(mediaStream) {
+        window.stream = mediaStream; // stream available to console
+        video.srcObject = mediaStream;
+        messagebox.style.display = 'none';
+        videoblock.style.display = 'block';
+        let track = mediaStream.getVideoTracks()[0];
+        let constraints = track.getConstraints();
+        console.log('Result constraints: ' + JSON.stringify(constraints));
+        if (constraints && constraints.width && constraints.width.exact) {
+            widthInput.value = constraints.width.exact;
+            widthOutput.textContent = constraints.width.exact;
+        } else if (constraints && constraints.width && constraints.width.min) {
+            widthInput.value = constraints.width.min;
+            widthOutput.textContent = constraints.width.min;
+        }
+    }
+
+    function errorMessage(who, what) {
+        let message = who + ': ' + what;
+        messagebox.innerText = message;
+        messagebox.style.display = 'block';
+        console.log(message);
+    }
+
+    function clearErrorMessage() {
+        messagebox.style.display = 'none';
+    }
+
+    function displayVideoDimensions(whereSeen) {
+        if (video.videoWidth) {
+            dimensions.innerText = 'Actual video dimensions: ' + video.videoWidth +
+                'x' + video.videoHeight + 'px.';
+            if (currentWidth !== video.videoWidth
+                || currentHeight !== video.videoHeight) {
+                console.log(whereSeen + ': ' + dimensions.innerText);
+                currentWidth = video.videoWidth;
+                currentHeight = video.videoHeight;
+            }
+        } else {
+            dimensions.innerText = 'Video not ready';
+        }
+    }
+
+    video.onloadedmetadata = function() {
+        displayVideoDimensions('loadedmetadata');
+    };
+
+    video.onresize = function() {
+        displayVideoDimensions('resize');
+    };
+
+    function constraintChange(e) {
+        widthOutput.textContent = e.target.value;
+        let track = window.stream.getVideoTracks()[0];
+        let constraints = {width: {exact: e.target.value}};
+        clearErrorMessage();
+        console.log('applying ' + JSON.stringify(constraints));
+        track.applyConstraints(constraints)
+            .then(function() {
+                console.log('applyConstraint success');
+                displayVideoDimensions('applyConstraints');
+            })
+            .catch(function(err) {
+                errorMessage('applyConstraints', err.name);
+                return false;
+            });
+        return true;
+    }
+
+    widthInput.onchange = constraintChange;
+
+    function getMedia(constraints) {
+        if (stream) {
+            stream.getTracks().forEach(function(track) {
+                track.stop();
+            });
+        }
+
+        clearErrorMessage();
+        videoblock.style.display = 'none';
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(gotStream)
+            .catch(function(e) {
+                errorMessage('getUserMedia', e.name);
+                return false;
+            });
+        return true;
+    }
+
+    for( let constraint of constratints ){
+        if( getMedia( constraint ) ) {
+            break;
+        }
+    }
+
+</script>
+
+</body>
+</html>
+
+
