@@ -207,6 +207,7 @@
                         </div>
 
                         <input type="submit" value="I am getting PUMPED!" class="btn btn-info btn-block">
+
                     </form>
                 </div>
             </div>
@@ -227,33 +228,36 @@
             $("div[id=cmRow]").removeClass( 'hidden' );
             $("div[id=inRow]").addClass( 'hidden' );
 
-            $( "input[name=heightCm]" ).prop('required', true);
-            $("input[name=heightIn]").prop('required', false);
-            $("input[name=heightFt]").prop('required', false);
+            $("input[name=heightCm]").prop( 'required', true );
+            $("input[name=heightIn]").prop( 'required', false );
+            $("input[name=heightFt]").prop( 'required', false );
 
 
             $weightInput = $( "input[name=weight]" );
             $weightInput.attr( "placeholder", "Weight in kgs" );
             $weightInput.attr( "title", "Weight in kgs" );
+            $weightInput.attr( "min", 30 );
+            $weightInput.attr( "max", 300 );
 
 
             if( $weightInput.val() !== "" ) {
                 $weightInput.val( Math.round ( $weightInput.val() * 0.453592 ) );
             }
 
-
-
         } else {
             $("div[id=inRow]").removeClass('hidden');
             $("div[id=cmRow]").addClass('hidden');
 
-            $("input[name=heightCm]").prop('required', false);
-            $("input[name=heightIn]").prop('required', true);
-            $("input[name=heightFt]").prop('required', true);
+            $("input[name=heightCm]").prop( 'required', false );
+            $("input[name=heightIn]").prop( 'required', true );
+            $("input[name=heightFt]").prop( 'required', true );
 
             $weightInput = $("input[name=weight]");
             $weightInput.attr( "placeholder", "Weight in lbs" );
             $weightInput.attr( "title", "Weight in lbs" );
+            $weightInput.attr( "min", 50 );
+            $weightInput.attr( "max", 500 );
+
 
             $weightInput.attr( 'placeholder', "Weight in lbs" );
 

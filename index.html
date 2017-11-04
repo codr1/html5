@@ -70,8 +70,6 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
 
-
-
         </script>
 
 
@@ -81,8 +79,9 @@
                    if( response.status === 'connected' ){
                        window.location.href = "enterData.html";
                    } else {
+                       alert( "Hey, Buster!  Facebook says they don't know you from Adam...  But what the hell, come right in!" );
                        window.location.href = "enterData.html";
-                       alert( "not again" );
+
                    }
                }, {scope: 'public_profile,email'});
             }
@@ -92,10 +91,20 @@
         <script>
             function statusChangeCallback( response ){
                 if( response )
-                    alert( response );
+                    //alert( response );
+                    //TODO: here we can just navigate to the next page.
+
                 else
-                    alert( 'no joy' );
+                    //alert( 'no joy' );
             }
+        </script>
+
+        <script>
+            function emailLogin() {
+                alert( "Ordinarily you would be in for some extreme vetting.  Today is your lucky day.  Come right in" );
+                window.location.href = "enterData.html";
+            }
+
         </script>
 
         <!--[if lte IE 9]>
@@ -128,7 +137,7 @@
                         </div>
                         <div class="panel-body" style="background-color: rgba( 1,1,1,0.15)">
 
-                            <form role="form" method="GET" action="enterData.html">
+                            <form role="form" method="GET" onsubmit="return emailLogin();" action="enterData.html">
 
                                 <div class="row">
                                     <div class="form-group col">

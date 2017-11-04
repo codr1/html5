@@ -159,9 +159,12 @@
                             </div>
 
                             <!-- <pre class="output"></pre> -->
-
                         </div>
                     </div>
+
+                    <form role="form" method="GET" onsubmit="return validatePosition();" action="shots.html">
+                        <input type="submit" value="Lets get this show started!" class="btn btn-info btn-block">
+                    </form>
 
                 </div>
             </div>
@@ -172,21 +175,6 @@
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -227,7 +215,7 @@
         if (x < 55) { x = 55;}
 
         if( y < -20 ) { y = -20; }
-        if( y > 10 ) { y = 10; }
+        if( y > 20 ) { y = 20; }
 
         // To make computation easier we shift the range of
         // x and y to [0,180]
@@ -246,6 +234,16 @@
         ball.style.left = maxY * yPct + "px";
         //output.innerHTML += "top: " + ball.style.top + " / " + maxX + "\n";
         //output.innerHTML += " left: " + ball.style.left + " / " + maxY + "\n";
+
+    }
+
+    function validatePosition(  ) {
+        if( ball.style.background == "forestgreen" ) {
+            return true;
+        } else {
+            alert( "I know this is shananigans, but just remember to lock on your way out" );
+            return true;
+        }
 
     }
 
