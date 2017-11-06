@@ -98,26 +98,14 @@
 </script>
 
 
-<script>
-    function doFBLogin( ) {
-        FB.login( function( response ){
-            if( response.status === 'connected' ){
-                window.location.href = "enterData.html";
-            } else {
-                window.location.href = "enterData.html";
-                alert( "not again" );
-            }
-        }, {scope: 'public_profile,email'});
-    }
-</script>
-
 
 <script>
     function statusChangeCallback( response ){
-        if( response )
-            alert( response );
-        else
-            alert( 'no joy' );
+        if( response ) {
+            //alert( response );
+        } else {
+            //alert( 'no joy' );
+        }
     }
 </script>
 
@@ -126,7 +114,6 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-<p>Hello world! S&F in HTML5.</p>
 <script src="js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>

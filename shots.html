@@ -20,15 +20,6 @@
     <link href="//netdna.bootstrapcdn.com/bootswatch/3.1.0/superhero/bootstrap.min.css" rel="stylesheet">
 
     <style>
-        .centered-form .panel{
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
-            padding: 2px;
-        }
-
-        .centered-form{
-            margin-top: 60px;
-        }
 
         body{
             background: url("img/turquoise-girl.jpg") no-repeat center fixed;
@@ -37,14 +28,6 @@
             height:100vh;
         }
 
-        .centered-form .panel{
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
-        }
-
-        .centered-form{
-            margin-top: 60px;
-        }
     </style>
 
 
@@ -243,18 +226,34 @@
         overlayImage.src = "img/" + pics[pic];
         var imageRatio = images[pic].width / images[pic].height;
 
+        //alert( imageRatio );
         // the video is as high as the window
         if( windowRatio > videoRatio ) {
-            overlayImage.height = window.innerHeight * 0.9;
 
+            if( ( ( window.innerHeight * 0.9 ) * imageRatio ) > window.innerWidth ) {
+               // alert( 'here' );
+                overlayImage.width = window.innerWidth * 0.9;
+                overlayImage.style.left = ( ( window.innerWidth / 2  ) - ( overlayImage.width / 2 ) ) + 'px';
+                //alert( overlayImage.style.left );
+                overlayImage.style.top = ( window.innerHeight / 2 - ( overlayImage.width / imageRatio ) / 2 ) + 'px';
+
+                alert( overlayImage.width + " " + window.innerWidth + " " + overlayImage.style.left );
+            } else {
+                //alert( 'there' );
+                overlayImage.height = window.innerHeight * 0.9;
+                overlayImage.style.left = ( window.innerWidth / 2 - ( overlayImage.height * imageRatio ) / 2 ) + 'px';
+                overlayImage.style.top = ( window.innerHeight / 2 - ( overlayImage.height / 2  ) )+ 'px';
+                // if( overlayImage.width > window.innerWidth * 0.9 ){
+                //     overlayImage.width = window.innerWidth * 0.9;
+                // }
+            }
         } else {
             // the video is as wide as the window
             overlayImage.height = ( window.innerWidth / videoRatio ) * 0.9;
 
         }
         //overlayImage.style.left = ( window.innerWidth / 2 - overlayImage.width / 2 ) + 'px';
-        overlayImage.style.left = ( window.innerWidth / 2 - ( overlayImage.height * imageRatio ) / 2 ) + 'px';
-        overlayImage.style.top = ( window.innerHeight / 2 - overlayImage.height / 2 ) + 'px';
+
 
 
         var x = setInterval( function(){
@@ -268,6 +267,8 @@
                 pic++;
                 if( pic < pics.length ) {
                     doTheShoot( pic );
+                } else {
+                    //window.location.href = "processing.html";
                 }
             }
 
