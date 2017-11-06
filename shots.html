@@ -204,6 +204,7 @@
     ];
 
     var pics = [ "front.png", "side.png", "side.png", "face.png" ];
+    var images = [];
 
     function takeAShot(  ){
 
@@ -240,7 +241,7 @@
         overlayImage.removeAttribute( "height" );
         overlayImage.removeAttribute( "width" );
         overlayImage.src = "img/" + pics[pic];
-        var imageRatio = overlayImage.width / overlayImage.height;
+        var imageRatio = images[pic].width / images[pic].height;
 
         // the video is as high as the window
         if( windowRatio > videoRatio ) {
@@ -386,8 +387,16 @@
 
     }
 
+    function preloadImages(  ){
+        for( var pic in pics ){
+            images[pic] = new Image();
+            images[pic].src = "img/" + pics[pic];
+
+        }
+    }
 
     //-----  Defacto Main -----//
+    preloadImages( );
     detectResolution( null );
     window.scrollTo( 0, 1 );
 </script>
