@@ -45,7 +45,8 @@
 
             z-index: -100;
             background-size: cover;
-            overflow: hidden;
+            overflow: hidden;;
+
         }
 
     </style>
@@ -147,6 +148,7 @@
     var stream;
 
     var videoblock = document.querySelector('#videoblock');
+    var videoInsert = document.querySelector('#videoStream');
     var messagebox = document.querySelector('#errormessage');
     var overlayImage = document.querySelector('#overlayImage');
     var body = document.querySelector('body');
@@ -218,42 +220,40 @@
         console.log( "Shooting " + pics[pic] );
 
         var videoRatio = video.videoWidth / video.videoHeight;
-        var windowRatio = window.innerWidth / window.innerHeight;
+        var videoInsertRatio = videoInsert.clientWidth / videoInsert.clientHeight;
+
+        // Figure out the size of the video on the screen
+        let videoPxWidth;
+        let videoPxHeight;
+        if( videoInsertRatio >= videoRatio ) {
+            // the video is maxing the window width-wise
+            videoPxWidth = videoInsert.clientWidth;
+            videoPxHeight =  videoPxWidth / videoRatio;
+        } else {
+            // the video is maxing out the window height-wise
+            videoPxHeight = videoInsert.clientHeight;
+            videoPxWidth = videoPxHeight * videoRatio;
+        }
 
 
+        // figure out how to center the overlay image on top of the video
         overlayImage.removeAttribute( "height" );
         overlayImage.removeAttribute( "width" );
         overlayImage.src = "img/" + pics[pic];
         var imageRatio = images[pic].width / images[pic].height;
 
-        //alert( imageRatio );
-        // the video is as high as the window
-        if( windowRatio > videoRatio ) {
-
-            if( ( ( window.innerHeight * 0.9 ) * imageRatio ) > window.innerWidth ) {
-               // alert( 'here' );
-                overlayImage.width = window.innerWidth * 0.9;
-                overlayImage.style.left = ( ( window.innerWidth / 2  ) - ( overlayImage.width / 2 ) ) + 'px';
-                //alert( overlayImage.style.left );
-                overlayImage.style.top = ( window.innerHeight / 2 - ( overlayImage.width / imageRatio ) / 2 ) + 'px';
-
-                alert( overlayImage.width + " " + window.innerWidth + " " + overlayImage.style.left );
-            } else {
-                //alert( 'there' );
-                overlayImage.height = window.innerHeight * 0.9;
-                overlayImage.style.left = ( window.innerWidth / 2 - ( overlayImage.height * imageRatio ) / 2 ) + 'px';
-                overlayImage.style.top = ( window.innerHeight / 2 - ( overlayImage.height / 2  ) )+ 'px';
-                // if( overlayImage.width > window.innerWidth * 0.9 ){
-                //     overlayImage.width = window.innerWidth * 0.9;
-                // }
-            }
+        // We figure out which dimension is constraining
+        if( imageRatio > videoRatio ) {
+            // The image is wider than the video
+            overlayImage.width = videoPxWidth * 0.9;
         } else {
-            // the video is as wide as the window
-            overlayImage.height = ( window.innerWidth / videoRatio ) * 0.9;
-
+            // The image is taller than the video
+            overlayImage.height = videoPxHeight * 0.9;
         }
-        //overlayImage.style.left = ( window.innerWidth / 2 - overlayImage.width / 2 ) + 'px';
 
+        // Now we center
+        overlayImage.style.left = ( videoInsert.clientWidth / 2 - overlayImage.width / 2 ) + 'px';
+        overlayImage.style.top = ( videoInsert.clientHeight / 2 - overlayImage.height / 2 ) + 'px';
 
 
         var x = setInterval( function(){

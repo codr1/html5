@@ -46,11 +46,56 @@
 
     </head>
     <body>
+
+
+        <script>
+            // Validate S&F FB token
+            function postFBAuthRequest( facebookToken ) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if( this.readyState == 4 && this.status == 200 ) {
+                        alert( this.responseText );
+                    }
+                };
+
+                let object = {};
+                object.backend = "facebook";
+                object.token = facebookToken;
+                object.grant_type = "convert_token";
+                object.client_id = "9Sr60XFG3FzmauXIdSZO8rIKogXkB5NPlwFBjtFz";
+
+                xhttp.open( "POST", "https://api.styleandfit.com/oauth/convert-token");
+                xhttp.setRequestHeader( "Content-Type", "application/json" );
+                xhttp.send( JSON.stringify( object ) );
+            }
+
+            // Validate S&F User/Pass Login
+            function postUserNameAuthRequest( userName, password ) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if( this.readyState == 4 && this.status == 200 ) {
+                        alert( this.responseText );
+                    }
+                };
+
+
+                let object;
+                object.grant_type = "password";
+                object.client_id = "9Sr60XFG3FzmauXIdSZO8rIKogXkB5NPlwFBjtFz";
+                object.username = userName;
+                object.password = password;
+
+                //xhttp.open( "POST", "https://api.styleandfit.com/oauth/convert-token");
+                xhttp.send();
+
+            }
+        </script>
+
         <!-- Load the facebook API! -->
         <script>
             window.fbAsyncInit = function() {
                 FB.init({
-                    appId            : '833613743472776',
+                    appId            : '1455738771180548',
                     autoLogAppEvents : true,
                     xfbml            : true,
                     version          : 'v2.10'
@@ -70,32 +115,29 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
 
-        </script>
 
-
-        <script>
             function doFBLogin( ) {
                FB.login( function( response ){
                    if( response.status === 'connected' ){
-                       window.location.href = "enterData.html";
+                       postFBAuthRequest( response.authResponse.accessToken );
+                       //window.location.href = "enterData.html";
                    } else {
-                       alert( "Hey, Buster!  Facebook says they don't know you from Adam...  But what the hell, come right in!" );
-                       window.location.href = "enterData.html";
-
+                       alert( "Facebook login failed." );
                    }
                }, {scope: 'public_profile,email'});
             }
-        </script>
 
-
-        <script>
             function statusChangeCallback( response ){
-                if( response )
+                if( response ) {
+                    console.log( "In status change callback: " + response );
+
+
+
                     //alert( response );
                     //TODO: here we can just navigate to the next page.
-
-                else
-                    //alert( 'no joy' );
+                } else {
+                    //alert( 'Login expired.' );
+                }
             }
         </script>
 
